@@ -1,12 +1,18 @@
 import './config'
 import express from 'express'
+import usersApiRoutes from './routes/users.api'
 
 const port = process.env.PORT
 const app = express()
 
-app.get('/', (req, res) => {
-  res.json({
-    testing: 'Hello, there!',
+app.use(express.json())
+app.use('/users', usersApiRoutes)
+
+app.get('/', (_request, response) => {
+  response.json({
+    '/users': {
+      post: 'create new user',
+    },
   })
 })
 
