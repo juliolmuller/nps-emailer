@@ -1,6 +1,7 @@
+import './config'
 import express from 'express'
 
-const port = 8080
+const port = process.env.PORT
 const app = express()
 
 app.get('/', (req, res) => {
