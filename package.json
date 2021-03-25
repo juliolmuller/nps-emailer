@@ -8,6 +8,12 @@
     "start": "node build/index.js",
     "development": "npm run dev",
     "dev": "tsnd src/index.ts --clear --respawn --transpile-only --ignore node_modules",
+    "typeorm": "tsnd node_modules/typeorm/cli.js",
+    "seed": "tsnd src/database/seeds/index.ts",
+    "migrate": "npm run typeorm -- migration:run",
+    "migrate:seed": "npm run migrate && npm run seed",
+    "migrate:reset": "npm run typeorm -- schema:drop && npm run migrate",
+    "migrate:reset:seed": "npm run migrate:reset && npm run seed",
     "build": "rm -rf build/ && tsc -p ."
   },
   "dependencies": {
