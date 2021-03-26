@@ -17,8 +17,9 @@
     "build": "rm -rf build/ && tsc -p ."
   },
   "dependencies": {
-    "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "lodash.snakecase": "^4.1.1",
+    "pluralize": "^8.0.0",
     "reflect-metadata": "^0.1.13",
     "sqlite3": "^5.0.2",
     "typeorm": "^0.2.31"
@@ -26,7 +27,9 @@
   "devDependencies": {
     "@lacussoft/eslint-config": "^1.0.1",
     "@types/express": "^4.17.11",
+    "@types/lodash.snakecase": "^4.1.6",
     "@types/node": "^14.14.35",
+    "@types/pluralize": "^0.0.29",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
     "eslint": "^7.22.0",
