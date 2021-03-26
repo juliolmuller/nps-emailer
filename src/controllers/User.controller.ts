@@ -4,6 +4,7 @@ import { User } from '../models'
 
 class UserController {
 
+  // Extract data required from request to save a new user
   async create(request: Request, response: Response) {
     const { name, email } = request.body
     const existingUser = await User.findOne({ email })
