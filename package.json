@@ -15,7 +15,8 @@
     "migrate:reset": "npm run typeorm -- schema:drop && npm run migrate",
     "migrate:reset:seed": "npm run migrate:reset && npm run seed",
     "build": "rm -rf build/ && tsc -p .",
-    "test": "cross-env NODE_ENV=test jest"
+    "test": "cross-env NODE_ENV=test jest",
+    "pretest": "rm -f src/database/db.test.sqlite"
   },
   "dependencies": {
     "express": "^4.17.1",
