@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { StatusCodes } from 'http-status-codes'
 import { User } from '../models'
 
 class UserController {
@@ -8,9 +9,9 @@ class UserController {
     const existingUser = await User.findOne({ email })
     console.log(existingUser)
     if (existingUser) {
-      return response.status(400).json({
-        error: `User with email "${email} already exists.`,
-      })
+      return response
+        .status(StatusCodes.UNPROCESSABLE_ENTITY)
+        .json({ error: `User with email "${email} already exists.` })
     }
 
     const user = new User()
@@ -19,7 +20,9 @@ class UserController {
     user.email = email
     await user.save()
 
-    return response.status(201).json(user)
+    return response
+      .status(StatusCodes.CREATED)
+      .json(user)
   }
 }
 
