@@ -2,6 +2,7 @@ module.exports = {
   root: true,
   env: {
     node: true,
+    jest: true,
   },
   extends: [
     'plugin:@typescript-eslint/eslint-recommended',
@@ -18,8 +19,10 @@ module.exports = {
     ecmaVersion: 2021,
   },
   rules: {
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
     'class-methods-use-this': 'off',
     'func-style': ['error', 'declaration', { allowArrowFunctions: true }],
     'no-console': 'off',
+    'object-curly-newline': 'off',
   },
 }
