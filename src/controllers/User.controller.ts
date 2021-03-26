@@ -7,7 +7,7 @@ class UserController {
   async create(request: Request, response: Response) {
     const { name, email } = request.body
     const existingUser = await User.findOne({ email })
-    console.log(existingUser)
+
     if (existingUser) {
       return response
         .status(StatusCodes.UNPROCESSABLE_ENTITY)
