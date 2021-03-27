@@ -1,0 +1,55 @@
+<style>
+  .container {
+    width: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .grades {
+    width: 480px;
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .grades a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    background: #8257e6;
+    color: #fff;
+    text-decoration: none;
+  }
+</style>
+
+<div class="container">
+  <p>Olá, <b>{{ username }}</b>! Tudo bem? </p>
+
+  <h3>{{ title }}</h3>
+  <br />
+  <p>{{ description }}</p>
+
+  <div class="grades">
+    <a href="#"><span>1</span></a>
+    <a href="#"><span>2</span></a>
+    <a href="#"><span>3</span></a>
+    <a href="#"><span>4</span></a>
+    <a href="#"><span>5</span></a>
+    <a href="#"><span>6</span></a>
+    <a href="#"><span>7</span></a>
+    <a href="#"><span>8</span></a>
+    <a href="#"><span>9</span></a>
+    <a href="#"><span>10</span></a>
+  </div>
+
+  <br />
+  <br />
+  <p>Sua opinião é muito importante para nós.</p>
+  <br />
+  <p>Atenciosamente,</p>
+  <p><b>Equipe LacusSoft</b></p>
+</div>

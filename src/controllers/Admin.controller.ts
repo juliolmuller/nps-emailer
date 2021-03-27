@@ -1,3 +1,4 @@
+import path from 'path'
 import { Request, Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { Survey, SurveyUser, User } from '../models'
@@ -28,7 +29,12 @@ class AdminController {
     userSurvey.userId = user.id
     await userSurvey.save()
 
-    await emailSender.submit(user.email, survey.title, survey.description)
+    const templatePath = path.resolve(__dirname, '..', 'templates', 'emails', 'survey.hbs')
+    await emailSender.submit(user.email, survey.title, templatePath, {
+      username: user.name,
+      title: survey.title,
+      description: survey.description,
+    })
 
     return response
       .status(StatusCodes.CREATED)

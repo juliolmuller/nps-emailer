@@ -1,3 +1,5 @@
+import fs from 'fs'
+import handlebars from 'handlebars'
 import { createTestAccount, createTransport, getTestMessageUrl, Transporter } from 'nodemailer'
 
 class EmailSender {
@@ -28,13 +30,16 @@ class EmailSender {
     })
   }
 
-  async submit(to: string, subject: string, body: string) {
+  async submit(to: string, subject: string, templatePath: string, variables = {}) {
+    const templateText = fs.readFileSync(templatePath).toString('utf8')
+    const html = handlebars.compile(templateText)(variables)
+
     const client = await this.clientPromise
     const message = await client.sendMail({
+      from: 'NPS <noreply@lacussoft.com>',
       to,
       subject,
-      html: body,
-      from: 'NPS <noreply@lacussoft.com>',
+      html,
     })
 
     console.log(`Message sent: ${message.messageId}`)
