@@ -1,32 +1,34 @@
 import { Request, Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { Survey, SurveyUser, User } from '../models'
+import { emailSender } from '../services'
 
 class AdminController {
 
   //
   async sendEmail(request: Request, response: Response) {
     const { surveyId, userEmail } = request.body
-    const existingSurvey = await Survey.findOne({ id: surveyId })
-    const existingUser = await User.findOne({ email: userEmail })
+    const survey = await Survey.findOne({ id: surveyId })
+    const user = await User.findOne({ email: userEmail })
 
-    if (!existingUser) {
+    if (!user) {
       return response
         .status(StatusCodes.UNPROCESSABLE_ENTITY)
         .json({ error: 'No valid user email provided.' })
     }
 
-    if (!existingSurvey) {
+    if (!survey) {
       return response
         .status(StatusCodes.UNPROCESSABLE_ENTITY)
         .json({ error: 'No valid survey ID provided.' })
     }
 
     const userSurvey = new SurveyUser()
-
-    userSurvey.surveyId = existingSurvey.id
-    userSurvey.userId = existingUser.id
+    userSurvey.surveyId = survey.id
+    userSurvey.userId = user.id
     await userSurvey.save()
+
+    await emailSender.submit(user.email, survey.title, survey.description)
 
     return response
       .status(StatusCodes.CREATED)
