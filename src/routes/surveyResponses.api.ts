@@ -4,7 +4,6 @@ import { SurveyResponseController } from '../controllers'
 const router = Router()
 const controller = new SurveyResponseController()
 
-router.post('/send-email', controller.sendEmail)
-router.get('/survey-response', controller.respondTo)
+router.get('/:id', controller.respondTo)
 
 export default router

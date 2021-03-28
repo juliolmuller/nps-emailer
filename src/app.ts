@@ -1,5 +1,6 @@
 import './config'
 import express from 'express'
+import adminApiRoutes from './routes/admin.api'
 import responseApiRoutes from './routes/surveyResponses.api'
 import surveysApiRoutes from './routes/surveys.api'
 import usersApiRoutes from './routes/users.api'
@@ -7,14 +8,18 @@ import usersApiRoutes from './routes/users.api'
 const app = express()
 
 app.use(express.json())
-app.use('/', responseApiRoutes)
+app.use('/admin', adminApiRoutes)
+app.use('/survey-response', responseApiRoutes)
 app.use('/surveys', surveysApiRoutes)
 app.use('/users', usersApiRoutes)
 
 app.get('/', (_request, response) => {
   response.json({
-    '/send-email': {
-      post: 'create a survey and notify user',
+    '/admin/send-email': {
+      post: 'create survey response and notify user',
+    },
+    '/survey-response/:id': {
+      get: 'add grade to a given survey response',
     },
     '/surveys': {
       get: 'list all surveys',
