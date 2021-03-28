@@ -1,17 +1,17 @@
 import path from 'path'
 import { Request, Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
-import { Survey, SurveyUser, User } from '../models'
+import { Survey, SurveyResponse, User } from '../models'
 import { emailSender } from '../services'
 
-class AdminController {
+class SurveyResponseController {
 
   //
   async sendEmail(request: Request, response: Response) {
     const { surveyId, userEmail } = request.body
     const survey = await Survey.findOne({ id: surveyId })
     const user = await User.findOne({ email: userEmail })
-    const surveyResponse = await SurveyUser.findOne({
+    const existingResponse = await SurveyResponse.findOne({
       surveyId: survey?.id,
       userId: user?.id,
     })
@@ -28,16 +28,16 @@ class AdminController {
         .json({ error: 'No valid survey ID provided.' })
     }
 
-    if (surveyResponse) {
+    if (existingResponse) {
       return response
         .status(StatusCodes.UNPROCESSABLE_ENTITY)
         .json({ error: `Survey has already been assigned to user "${user.email}".` })
     }
 
-    const userSurvey = new SurveyUser()
-    userSurvey.surveyId = survey.id
-    userSurvey.userId = user.id
-    await userSurvey.save()
+    const surveyResponse = new SurveyResponse()
+    surveyResponse.surveyId = survey.id
+    surveyResponse.userId = user.id
+    await surveyResponse.save()
 
     const templatePath = path.resolve(__dirname, '..', 'templates', 'emails', 'survey.hbs')
     await emailSender.submit(user.email, survey.title, templatePath, {
@@ -48,8 +48,8 @@ class AdminController {
 
     return response
       .status(StatusCodes.CREATED)
-      .json(userSurvey)
+      .json(surveyResponse)
   }
 }
 
-export default AdminController
+export default SurveyResponseController

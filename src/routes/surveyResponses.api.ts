@@ -1,8 +1,8 @@
 import { Router } from 'express'
-import { AdminController } from '../controllers'
+import { SurveyResponseController } from '../controllers'
 
 const router = Router()
-const controller = new AdminController()
+const controller = new SurveyResponseController()
 
 router.post('/send-email', controller.sendEmail)
 

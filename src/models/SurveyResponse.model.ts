@@ -1,7 +1,7 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
-@Entity('survey_user')
-class SurveyUser extends BaseEntity {
+@Entity()
+class SurveyResponse extends BaseEntity {
 
   @PrimaryGeneratedColumn('uuid')
   readonly id: string
@@ -19,4 +19,4 @@ class SurveyUser extends BaseEntity {
   createdAt: Date
 }
 
-export default SurveyUser
+export default SurveyResponse
