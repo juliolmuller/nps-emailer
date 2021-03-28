@@ -11,6 +11,10 @@ class AdminController {
     const { surveyId, userEmail } = request.body
     const survey = await Survey.findOne({ id: surveyId })
     const user = await User.findOne({ email: userEmail })
+    const surveyResponse = await SurveyUser.findOne({
+      surveyId: survey?.id,
+      userId: user?.id,
+    })
 
     if (!user) {
       return response
@@ -22,6 +26,12 @@ class AdminController {
       return response
         .status(StatusCodes.UNPROCESSABLE_ENTITY)
         .json({ error: 'No valid survey ID provided.' })
+    }
+
+    if (surveyResponse) {
+      return response
+        .status(StatusCodes.UNPROCESSABLE_ENTITY)
+        .json({ error: `Survey has already been assigned to user "${user.email}".` })
     }
 
     const userSurvey = new SurveyUser()
