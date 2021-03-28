@@ -5,8 +5,12 @@ import app from '../app'
 
 describe('Users API', () => {
   beforeAll(async () => {
-    const connection = await createConnection()
-    await connection.runMigrations()
+    try {
+      const connection = await createConnection()
+      await connection.runMigrations()
+    } catch (error) {
+      console.warn(error.message)
+    }
   })
 
   it('Should create a new user', async () => {
