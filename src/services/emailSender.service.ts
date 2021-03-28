@@ -7,10 +7,6 @@ class EmailSender {
   private clientPromise: Promise<Transporter>
 
   constructor() {
-    this.init()
-  }
-
-  private init() {
     this.clientPromise = new Promise((resolve, reject) => {
       createTestAccount()
         .then((account) => createTransport({
