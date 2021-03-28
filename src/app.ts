@@ -15,6 +15,9 @@ app.use('/users', usersApiRoutes)
 
 app.get('/', (_request, response) => {
   response.json({
+    '/admin/get/:surveyId': {
+      get: 'calculate NOS index to the given survey',
+    },
     '/admin/send-email': {
       post: 'create survey response and notify user',
     },
