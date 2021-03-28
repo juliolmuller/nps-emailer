@@ -6,7 +6,7 @@ import { emailSender } from '../services'
 
 class SurveyResponseController {
 
-  //
+  // Creates an unanswered survey response and notify user
   async sendEmail(request: Request, response: Response) {
     const { surveyId, userEmail } = request.body
     const survey = await Survey.findOne({ id: surveyId })
@@ -41,14 +41,21 @@ class SurveyResponseController {
 
     const templatePath = path.resolve(__dirname, '..', 'templates', 'emails', 'survey.hbs')
     await emailSender.submit(user.email, survey.title, templatePath, {
-      username: user.name,
+      user: user.name,
       title: survey.title,
       description: survey.description,
+      surveyId: surveyResponse.id,
+      responseURI: `${process.env.HOST}:${process.env.PORT}/survey-response`,
     })
 
     return response
       .status(StatusCodes.CREATED)
       .json(surveyResponse)
+  }
+
+  async respondTo(request: Request, response: Response) {
+    // TODO: to implement
+    response.json(request.query)
   }
 }
 
